@@ -151,6 +151,23 @@ def signup(request):
 <h3>{{ error }}</h3>
 
 ```
+# 5. Incorporar cookies.
+Para hacer que quede registrado en las cookies hay que ingresar el siguiente módulo:
+```python
+from django.contrib.auth import login
+```
 
-
+Se integra en la función:
+```python
+...
+        if password1 == password2:
+            try:
+                user = User.objects.create_user(username=username, password=password1)
+                user.save()
+                error = 'Usario creado'
+                login(request, user)
+                # Registrar en la cokie el request y el usuario.
+                return redirect('/')
+...
+```
 
