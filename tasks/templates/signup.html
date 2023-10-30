@@ -1,0 +1,9 @@
+<h1>Signup</h1>
+
+<form action="" method="post">
+    <!-- Llave de seguridad -->
+    {% csrf_token %}
+
+    <!-- Formulario -->
+    {{ forms.as_p }}
+</form>
