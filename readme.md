@@ -102,18 +102,37 @@ urlpatterns = [
 
 ## 4.3) Crear vista
 ```python
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 #Ésta clase nos entrega el forms para el usuario
-
-def main(request):
-    return HttpResponse('<h1>Inicio.</h1>')
+from django.contrib.auth.models import User
+#Tabla User
 
 def signup(request):
+    error = ''
+    if request.method == 'GET':
+        error= ''
+    else:
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if password1 == password2:
+            try:
+                user = User.objects.create_user(username=username, password=password1)
+                user.save()
+                error = 'Usario creado'
+            except:
+                error = 'Usuario ya existe'
+        else:
+            error = 'Las contraseñas no son iguales'
+    
+    # Al final retorna a la misma página y manda una cadena de texto
     return render(request, 'signup.html', {
-        'forms': UserCreationForm 
+    'forms': UserCreationForm,
+    'error': error
     })
+
     
 ```
 
@@ -121,13 +140,16 @@ def signup(request):
 ```html
 <h1>Signup</h1>
 
-<form action="" method="post">
+<form method="post">
     <!-- Llave de seguridad -->
     {% csrf_token %}
 
     <!-- Formulario -->
     {{ forms.as_p }}
+    <button>Guardar</button>
 </form>
+<h3>{{ error }}</h3>
+
 ```
 
 
