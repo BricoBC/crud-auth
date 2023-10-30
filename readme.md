@@ -170,4 +170,6 @@ Se integra en la función:
                 return redirect('/')
 ...
 ```
+Para ver que ya guarden estos datos hay que inspeccionar el sitio web, en el panel que te abra te iras a Aplicación, le das clic en Cookies y se muestran todas las que tienen el sistema.
+
 

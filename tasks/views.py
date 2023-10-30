@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 #Ésta clase nos entrega el forms para el usuario
 from django.contrib.auth.models import User
 #Tabla User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 #Crear una cookie para guardar los datos del usuario
 
 def signup(request):
@@ -38,3 +38,22 @@ def signup(request):
 def home(request):
     return HttpResponse('<h1>Inicio.</h1>')
         
+def login(request):
+    error = ''
+    if request.method == 'GET':
+        error=''
+    else: 
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password) 
+        # Devuelve al usuario
+        if user is None:
+            error = 'Verifica usuario/contraseña'
+        else:
+            return redirect('/')
+        
+    return render(request, 'login.html', {
+        'form': AuthenticationForm,
+        'error': error
+    })
