@@ -34,7 +34,7 @@ pip install -r requirements.txt
 
 Es importante recordar que a lo largo de la vida del proyecto hay que estar guardando las dependencias.
 
-## 2. Instalación
+# 2. Instalación
 Hay que recordar que se tiene dos formas de instalar Django.
 
 ```python
@@ -50,25 +50,25 @@ Para verificar la versión es:
 django-admin --version
 ```
 
-## 3. Crear el proyecto, la app y ejecutar el servidor.
-### 3.1) Proyecto
+# 3. Crear el proyecto, la app y ejecutar el servidor.
+## 3.1) Proyecto
 El proyecto va a tener como nombre **_crud-auth_**
 ```python
 django-admin startproject crud-auth .
 ```
-### 3.2) App
+## 3.2) App
 La aplicación se va a llamar **_tasks_**
 ```python
 pythn manage.py startapp tasks
 ```
 
-### 3.3) Ejecutar el proyecto
+## 3.3) Ejecutar el proyecto
 ```python
 python manage.py runserver
 ```
-## 4. Interfaz Registrarse
+# 4. Interfaz Registrarse
 Cuando se crea la app hay que recordar que se tiene que vincualar con las app del proyecto, se abre la carpeta del proyecto y se va al archivo de **_settings.py_**, se busca el array con nombre de **INSTALLED_APPS** y se agrega al final la app que se hizo.
-### 4.1) Crear base de datos
+## 4.1) Crear base de datos
 Para cuando se crea un nuevo modelo recordemos que se utiliza el siguiente comando:
 ```python
 python manage.py makemigrations
@@ -79,7 +79,7 @@ Para crear todos los modelos es con el siguiente comando:
 python manage.py migrate
 ```
 
-### 4.2) Crear url
+## 4.2) Crear url
 Url del proyecto
 ```python
 from django.contrib import admin
@@ -100,7 +100,7 @@ urlpatterns = [
 ]
 ```
 
-### 4.3) Crear vista
+## 4.3) Crear vista
 ```python
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -117,7 +117,7 @@ def signup(request):
     
 ```
 
-### 4.4) Crear plantilla para la vista
+## 4.4) Crear plantilla para la vista
 ```html
 <h1>Signup</h1>
 
