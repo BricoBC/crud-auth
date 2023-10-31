@@ -229,3 +229,56 @@ El código queda de la siguiente forma:
 <h3>{{error}}</h3>
 ```
 # 7. Agregar plantilla base
+Esta sección se conoce en el **project-django** como _Reutilizar plantillas_
+## 7.1) Crear plantilla base
+El código queda de la siguiente forma:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJANGO CRUD</title>
+</head>
+<body>
+
+    <ul>
+        {% if user.is_authenticated %}
+        <li><a href="/logout">Cerrar sesión</a></li>
+        {% else %}
+        <li><a href="/login">Iniciar sesión</a></li>
+        {% endif %}
+    </ul>
+    
+    {% block content %}
+    {% endblock content %}
+
+</body>
+</html>
+```
+## 7.2) Unir la plantilla base con la vista principal
+
+# 8. Crear el cierre de sesión.
+# 8.1) Crear url 
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('signup/', views.signup, name='signup'),
+    path('', views.home, name='home'),
+    path('login/', views.sigin, name='login'),
+    path('logout/', views.signout, name='logout')
+]
+```
+# 8.2) Crear vista
+```python
+from django.contrib.auth import login, authenticate, logout
+def signout(request):
+    logout(request)
+    return redirect('/login')
+```
+# 8.3)Crear plantilla base
+La plantilla se integra con la de base.html
+
+# 9. Modelos
