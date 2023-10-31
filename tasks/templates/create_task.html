@@ -4,12 +4,14 @@
 
 Crear tarea
 
-<form action="{% url 'tasks' %}">
+<form method="POST">
+    {% csrf_token %}
 
     {{form.as_p}}
+    <button>Crear</button>
 
 </form>
 
-<button>Crear</button>
+{{text}}
 
 {% endblock content %}

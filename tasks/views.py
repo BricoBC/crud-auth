@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from .forms import TaskForm
+from .models import Task
 
 def signup(request):
     error = ''
@@ -62,8 +63,17 @@ def signout(request):
     return redirect('/login')
 
 def task_create(request):
+    txt = None
+    if request.method == 'GET':
+        txt = ''
+    else:        
+        print(request.POST)
+        
+        txt = 'Tarea creada'
+    
     return render(request, 'create_task.html',{
-        'form' : TaskForm
+        'form' : TaskForm,
+        'text': txt
     })
     
 def task(request):
