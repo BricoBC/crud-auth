@@ -312,3 +312,25 @@ Después para ya crear las tablas es con:
 ```python
 python manage migrate
 ```
+
+# 10. Panel de adminstrador
+Para poder ver las tablas que se van creando al panel de administrador es necesario hacer lo siguiente:
+1. Ir al archivo **admin.py** de la app y agregar lo siguiente:
+```python
+from django.contrib import admin
+from .models import Task
+
+admin.site.register(Task)
+```
+2. Crear a un superusuario y su contraseña, 
+```python
+python manage.py createsuperuser
+```
+3. En el archivo de **admin.py** de la aplicación agregar lo siguiente:
+```python
+from django.contrib import admin
+from .models import Task
+
+admin.site.register(Task)
+```
+
