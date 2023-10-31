@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-#Ésta clase nos entrega el forms para el usuario
 from django.contrib.auth.models import User
-#Tabla User
 from django.contrib.auth import login, authenticate, logout
-#Crear una cookie para guardar los datos del usuario
+from .forms import TaskForm
 
 def signup(request):
     error = ''
@@ -62,3 +60,11 @@ def sigin(request):
 def signout(request):
     logout(request)
     return redirect('/login')
+
+def task_create(request):
+    return render(request, 'create_task.html',{
+        'form' : TaskForm
+    })
+    
+def task(request):
+    return render(request, 'tasks.html')

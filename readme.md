@@ -333,4 +333,55 @@ from .models import Task
 
 admin.site.register(Task)
 ```
+# 11. Crear formulario a través de una tabla creada
+## 11.1) Crear el forms.
+Se va a crear el archivo **forms.py** y dentro se va a poner el siguiente código:
+```python
+from django.forms import ModelForm
+#Clase que hace herencia para crear un forms
+
+from .models import Task
+#La tabla con la que se va hacer un forms.
+
+class TaskForm(ModelForm):
+    class Meta:
+        model = Task
+        #Tabla
+        fields = ['title', 'description', 'important']
+        # Se agrega los campos que se quiere hacer el formulario
+```
+## 11.2) Crear el url para el formulario
+```python
+...
+    path('login/', views.sigin, name='login'),
+    path('logout/', views.signout, name='logout'),
+    path('task/', views.task, name='tasks'),
+    path('task/create/', views.task_create, name='create_task')
+]
+```
+## 11.3) Crear la vista para el formulario
+```python
+def task_create(request):
+    return render(request, 'create_task.html',{
+        'form' : TaskForm
+    })
+```
+## 11.4) Crear la plantilla para el formulario
+```python
+{% extends 'base.html' %}
+
+{% block content %}
+
+Crear tarea
+
+<form action="{% url 'tasks' %}">
+
+    {{form.as_p}}
+
+</form>
+
+<button>Crear</button>
+
+{% endblock content %}
+```
 

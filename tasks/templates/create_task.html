@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+Crear tarea
+
+<form action="{% url 'tasks' %}">
+
+    {{form.as_p}}
+
+</form>
+
+<button>Crear</button>
+
+{% endblock content %}

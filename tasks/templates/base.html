@@ -8,11 +8,14 @@
 <body>
 
     <ul>
+        <li><a href=" {% url 'home' %}">Inicio</a></li>
         {% if user.is_authenticated %}
         <li><a href="/logout">Cerrar sesión</a></li>
         {% else %}
         <li><a href="/login">Iniciar sesión</a></li>
         {% endif %}
+        <li><a href=" {% url 'tasks' %} ">Tareas</a></li>
+        <li><a href=" {% url 'create_task' %}">Crear tarea</a></li>
     </ul>
     
     {% block content %}
