@@ -282,6 +282,33 @@ def signout(request):
     return redirect('/login')
 ```
 ## 8.3)Crear plantilla base
-La plantilla se integra con la de base.html
+La plantilla es la de base.html
 
 # 9. Modelos
+## 9.1) Crear modelo
+```python
+from django.db import models
+from django.contrib.auth.models import User
+
+# Create your models here.
+class Task(models.Model):
+    title = models.CharField( max_length=50 )
+    # As TextInput
+    description = models.TextField( blank=True )
+    #As TextArea
+    created = models.DateTimeField( auto_now_add=True )
+    # As DateField
+    date_completed = models.DateTimeField( null=True )
+    important = models.BooleanField( default=False )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #on_delete = models.CASCADE is for when deleted a user their tasks also deleted
+```
+## 9.2) Crear tablas
+Compilar las tablas.
+```python
+python manage makemigrations
+```
+Después para ya crear las tablas es con:
+```python
+python manage migrate
+```
