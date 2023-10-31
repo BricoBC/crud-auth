@@ -361,13 +361,16 @@ class TaskForm(ModelForm):
 ```
 ## 11.3) Crear la vista para el formulario
 ```python
+from .forms import TaskForm
+#Importamos el formulario
+
 def task_create(request):
     return render(request, 'create_task.html',{
         'form' : TaskForm
     })
 ```
 ## 11.4) Crear la plantilla para el formulario
-```python
+```django
 {% extends 'base.html' %}
 
 {% block content %}
