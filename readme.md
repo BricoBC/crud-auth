@@ -399,3 +399,33 @@ Crear tarea
 {% endblock content %}
 ```
 
+# 12.Guardar datos en Base de datos
+Para almacenar la base de datos se puede hacer de dos formas:
+1. Es la forma en como se vio en el repositorio de project-django
+2. Utilizando el mismo formulario se puede guardar todos los datos, quedaria de la siguiente forma:
+```python
+def task_create(request):
+    txt = None
+    if request.method == 'GET':
+        txt = ''
+    else:        
+        try:            
+            form = TaskForm(request.POST)
+            # Genera el formulario
+            new_task = form.save(commit=False)
+            # Se almacena los datos correspondiente a su campo
+            #Commit=false es para que no se guarde en una instancia de Base de Datos
+            new_task.user = request.user
+            #request.user es el usuario de quien inicio sesión
+            new_task.save()
+            #Se guarda en base de datos
+            txt = 'Tarea creada'
+        except:
+            txt = 'No se pudo guardar los datos'
+    
+    return render(request, 'create_task.html',{
+        'form' : TaskForm,
+        'text': txt
+    })
+
+```
