@@ -302,6 +302,9 @@ class Task(models.Model):
     important = models.BooleanField( default=False )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #on_delete = models.CASCADE is for when deleted a user their tasks also deleted
+    def __str__(self) -> str:        
+        #Es para la vista en la interfaz del adminstrador
+        return self.title + ' <- ' + self.user.username
 ```
 ## 9.2) Crear tablas
 Compilar las tablas.
