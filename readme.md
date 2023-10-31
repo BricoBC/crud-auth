@@ -262,7 +262,7 @@ El código queda de la siguiente forma:
 ## 7.2) Unir la plantilla base con la vista principal
 
 # 8. Crear el cierre de sesión.
-# 8.1) Crear url 
+## 8.1) Crear url 
 ```python
 from django.urls import path
 from . import views
@@ -274,14 +274,14 @@ urlpatterns = [
     path('logout/', views.signout, name='logout')
 ]
 ```
-# 8.2) Crear vista
+## 8.2) Crear vista
 ```python
 from django.contrib.auth import login, authenticate, logout
 def signout(request):
     logout(request)
     return redirect('/login')
 ```
-# 8.3)Crear plantilla base
+## 8.3)Crear plantilla base
 La plantilla se integra con la de base.html
 
 # 9. Modelos
