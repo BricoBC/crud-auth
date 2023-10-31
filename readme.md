@@ -172,4 +172,60 @@ Se integra en la función:
 ```
 Para ver que ya guarden estos datos hay que inspeccionar el sitio web, en el panel que te abra te iras a Aplicación, le das clic en Cookies y se muestran todas las que tienen el sistema.
 
+# 6. Interfaz registrarse
+## 6.1) Crear url
+Hasta ahora el código para el url tiene lo siguiente:
+```python
+from django.urls import path
+from . import views
 
+urlpatterns = [
+    path('signup/', views.signup, name='signup'),
+    path('', views.home, name='home'),
+    path('login/', views.sigin, name='login')
+    #Url de login
+]
+```
+
+## 6.2) Crear vista
+La función de la vista queda de la siguiente forma:
+```python
+from django.contrib.auth import login, authenticate
+
+def sigin(request):
+    error = ''
+    if request.method == 'GET':
+        error=''
+    else: 
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password) 
+        # Devuelve el nombre usuario si es que existe
+        if user is None:
+            error = 'Verifica usuario/contraseña'
+        else:
+            login(request, user)
+            return redirect('/')
+        
+    return render(request, 'login.html', {
+        'form': AuthenticationForm,
+        'error': error
+    })
+
+```
+## 6.3) Crear plantilla para la vista
+El código queda de la siguiente forma:
+```html
+<h1>LOGIN</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    {{form.as_p}}
+    <button>Login</button>
+</form>
+
+<h3>{{error}}</h3>
+```
+# 7. Agregar plantilla base

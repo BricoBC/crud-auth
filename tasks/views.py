@@ -38,7 +38,7 @@ def signup(request):
 def home(request):
     return HttpResponse('<h1>Inicio.</h1>')
         
-def login(request):
+def sigin(request):
     error = ''
     if request.method == 'GET':
         error=''
@@ -47,10 +47,11 @@ def login(request):
         password = request.POST['password']
         
         user = authenticate(request, username=username, password=password) 
-        # Devuelve al usuario
+        # Devuelve el nombre usuario si es que existe
         if user is None:
             error = 'Verifica usuario/contraseña'
         else:
+            login(request, user)
             return redirect('/')
         
     return render(request, 'login.html', {
