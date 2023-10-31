@@ -432,3 +432,73 @@ def task_create(request):
     })
 
 ```
+
+# 13. Enviar datos a un html
+Suponiendo que ya se tiene el url entonces:
+## 13.1) Crear la vista
+```python
+def task(request):
+    tasks = Task.objects.filter( user = request.user, date_completed__isnull=True )
+    tasks_complete = Task.objects.filter( user = request.user, date_completed__isnull=False )
+    
+    return render(request, 'tasks.html',{
+        'tasks': tasks,
+        'task_complete': tasks_complete
+    })
+```
+## 13.2) Integrar los datos al html
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if tasks != null %}
+
+    Todas tus tareas pendientes son:
+
+    {% for task in tasks %}
+    <section>
+        <ul>
+            <li>
+                {{task.title}}
+                {% if task.important %}
+                ❗❗❗
+                {% else %}
+                🐢🐢🐢   
+                {% endif %}
+            </li>
+            <h4>
+                {{task.description}}
+            </h4>
+            <button>Actualizar</button>
+        </ul>
+    </section>
+    {% endfor %}
+
+{% endif %}
+
+{% if tasks_complete != null %}
+
+    Las tareas completadas son:
+    {% for task in tasks_complete %}
+    <section>
+        <ul>
+            <li>
+                {{task.title}}
+                {% if task.important %}
+                ❗❗❗
+                {% else %}
+                🐢🐢🐢   
+                {% endif %}
+            </li>
+            <h4>
+                {{task.description}}
+            </h4>
+            <button>Actualizar</button>
+        </ul>
+    </section>
+    {% endfor %}
+{% endif %}
+
+{% endblock content %}
+```
