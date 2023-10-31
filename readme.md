@@ -365,8 +365,17 @@ from .forms import TaskForm
 #Importamos el formulario
 
 def task_create(request):
+    txt = None
+    if request.method == 'GET':
+        txt = ''
+    else:        
+        print(request.POST)
+        
+        txt = 'Tarea creada'
+    
     return render(request, 'create_task.html',{
-        'form' : TaskForm
+        'form' : TaskForm,
+        'text': txt
     })
 ```
 ## 11.4) Crear la plantilla para el formulario
@@ -377,13 +386,15 @@ def task_create(request):
 
 Crear tarea
 
-<form action="{% url 'tasks' %}">
+<form method="POST">
+    {% csrf_token %}
 
     {{form.as_p}}
+    <button>Crear</button>
 
 </form>
 
-<button>Crear</button>
+{{text}}
 
 {% endblock content %}
 ```
