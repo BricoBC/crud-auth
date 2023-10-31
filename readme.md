@@ -232,7 +232,7 @@ El código queda de la siguiente forma:
 Esta sección se conoce en el **project-django** como _Reutilizar plantillas_
 ## 7.1) Crear plantilla base
 El código queda de la siguiente forma:
-```html
+```django
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,6 +244,9 @@ El código queda de la siguiente forma:
 
     <ul>
         {% if user.is_authenticated %}
+        {# Cuando se inicia sesión se crea una variable global con el nombre de user
+         Por esta variable se puede saber si ya inicio sesión o no el usuario
+         La variable user está relacionada con el metodo login de view #}
         <li><a href="/logout">Cerrar sesión</a></li>
         {% else %}
         <li><a href="/login">Iniciar sesión</a></li>
