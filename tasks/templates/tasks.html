@@ -2,6 +2,54 @@
 
 {% block content %}
 
-Todas las tareas
+{% if tasks != null %}
+
+    Todas tus tareas pendientes son:
+
+    {% for task in tasks %}
+    <section>
+        <ul>
+            <li>
+                {{task.title}}
+                {% if task.important %}
+                ❗❗❗
+                {% else %}
+                🐢🐢🐢   
+                {% endif %}
+            </li>
+            <h4>
+                {{task.description}}
+            </h4>
+            <button>Actualizar</button>
+        </ul>
+    </section>
+    {% endfor %}
+
+{% endif %}
+
+{% if tasks_complete != null %}
+
+    Las tareas completadas son:
+    {% for task in tasks_complete %}
+    <section>
+        <ul>
+            <li>
+                {{task.title}}
+                {% if task.important %}
+                ❗❗❗
+                {% else %}
+                🐢🐢🐢   
+                {% endif %}
+            </li>
+            <h4>
+                {{task.description}}
+            </h4>
+            <button>Actualizar</button>
+        </ul>
+    </section>
+    {% endfor %}
+
+{% endif %}
+
 
 {% endblock content %}

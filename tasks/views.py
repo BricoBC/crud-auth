@@ -87,4 +87,10 @@ def task_create(request):
     })
     
 def task(request):
-    return render(request, 'tasks.html')
+    tasks = Task.objects.filter( user = request.user, date_completed__isnull=True )
+    tasks_complete = Task.objects.filter( user = request.user, date_completed__isnull=False )
+    
+    return render(request, 'tasks.html',{
+        'tasks': tasks,
+        'task_complete': tasks_complete
+    })

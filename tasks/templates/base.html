@@ -17,6 +17,8 @@
         <li><a href=" {% url 'tasks' %} ">Tareas</a></li>
         <li><a href=" {% url 'create_task' %}">Crear tarea</a></li>
     </ul>
+
+    <h2>Usuario: {{ user.username }} </h2>
     
     {% block content %}
     {% endblock content %}
