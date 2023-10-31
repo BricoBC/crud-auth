@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 #Ésta clase nos entrega el forms para el usuario
 from django.contrib.auth.models import User
 #Tabla User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 #Crear una cookie para guardar los datos del usuario
 
 def signup(request):
@@ -36,7 +36,7 @@ def signup(request):
 
             
 def home(request):
-    return HttpResponse('<h1>Inicio.</h1>')
+    return render(request, 'home.html')
         
 def sigin(request):
     error = ''
@@ -58,3 +58,7 @@ def sigin(request):
         'form': AuthenticationForm,
         'error': error
     })
+
+def signout(request):
+    logout(request)
+    return redirect('/login')
