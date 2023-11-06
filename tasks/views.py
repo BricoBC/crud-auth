@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -94,3 +94,7 @@ def task(request):
         'tasks': tasks,
         'task_complete': tasks_complete
     })
+    
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    return render(request, 'task.html', {'task': task})

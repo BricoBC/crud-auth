@@ -502,3 +502,35 @@ def task(request):
 
 {% endblock content %}
 ```
+
+## 13.3) Enviar parametros en el url
+Hay que recordar que se puede solicitar variables en la url de la siguiente forma:
+```python
+...
+    path('task/', views.task, name='tasks'),
+    path('task/create/', views.task_create, name='create_task'),
+    path('task/<int:task_id>/', views.task_detail, name='task_detail'),
+    #  <tipo_variable: nombre_variable>
+]
+```
+Asi que en la vista quedaria de la siguiente forma:
+```python
+from django.shortcuts import get_object_or_404
+
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
+    return render(request, 'task.html', {'task': task})
+```
+Y para el template seria...
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{task.title}}</h1>
+
+<h2>{{task.description}}</h2>
+
+
+{% endblock content %}
+```

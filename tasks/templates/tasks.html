@@ -20,7 +20,7 @@
             <h4>
                 {{task.description}}
             </h4>
-            <button>Actualizar</button>
+            <a href="{% url 'task_detail' task.id %}"><button>Editar</button></a>
         </ul>
     </section>
     {% endfor %}
@@ -44,7 +44,6 @@
             <h4>
                 {{task.description}}
             </h4>
-            <button>Actualizar</button>
         </ul>
     </section>
     {% endfor %}
