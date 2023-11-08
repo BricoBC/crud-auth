@@ -97,7 +97,7 @@ def task(request):
     
 def task_detail(request, task_id):
     txt = ''
-    task = get_object_or_404(Task, pk=task_id) 
+    task = get_object_or_404(Task, pk=task_id, user=request.user) 
     #Va a obtener los datos de la tabla Tarea mediente la llave primaria
     if request.method == 'GET':    
         form = TaskForm(instance=task)
