@@ -496,7 +496,7 @@ def task_complete(request, task_id):
 3. Crear el template
 No creo un template nuevo, lo redirecciono a la vista de las tareas.
 
-# 12.3 Eliminar una tarea desde un botón en el front
+## 12.3 Eliminar una tarea desde un botón en el front
 1. Crear el url:
 ```python
 ...
