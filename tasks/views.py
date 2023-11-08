@@ -96,11 +96,19 @@ def task(request):
     })
     
 def task_detail(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
+    txt = ''
+    task = get_object_or_404(Task, pk=task_id) 
+    #Va a obtener los datos de la tabla Tarea mediente la llave primaria
     if request.method == 'GET':    
         form = TaskForm(instance=task)
-        return render(request, 'task.html', {'task': task, 'form': form})
+        #Crea un formulario ya con los datos rellenos
     else:
-        form = TaskForm(request.POST, instance=task)
-        form.save()  
-        return redirect('tasks')
+        try:
+            form = TaskForm(request.POST, instance=task)
+            #Llena el formulario con la información mandada con el metodo post mediante la instancia de la tarea
+            form.save()  
+            #Se guarda
+            return redirect('tasks')
+        except:
+            txt = 'Error al actualizar datos'
+    return render(request, 'task.html', {'task': task, 'form': form, 'text': txt})
