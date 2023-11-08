@@ -9,6 +9,15 @@
 
     <button>Actualizar</button>
 </form>
+
+<form action="{% url 'task_complete' task.id %}" method="post">
+    {% csrf_token %}
+    <button>Completada</button>
+</form>
+
+<form>
+    <button>Eliminar</button>
+</form>
 {{text}}
 
 {% endblock content %}

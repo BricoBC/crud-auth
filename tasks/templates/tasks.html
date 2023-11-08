@@ -2,53 +2,61 @@
 
 {% block content %}
 
-{% if tasks != null %}
+    {% if tasks == ''%}
+        <h3>
+            Todas tus tareas pendientes son:
+        </h3>
 
-    Todas tus tareas pendientes son:
-
-    {% for task in tasks %}
-    <section>
-        <ul>
-            <li>
-                {{task.title}}
-                {% if task.important %}
-                ❗❗❗
-                {% else %}
-                🐢🐢🐢   
-                {% endif %}
-            </li>
-            <h4>
-                {{task.description}}
-            </h4>
-            <a href="{% url 'task_detail' task.id %}"><button>Editar</button></a>
-        </ul>
-    </section>
-    {% endfor %}
-
-{% endif %}
-
-{% if tasks_complete != null %}
-
-    Las tareas completadas son:
-    {% for task in tasks_complete %}
-    <section>
-        <ul>
-            <li>
-                {{task.title}}
-                {% if task.important %}
-                ❗❗❗
-                {% else %}
-                🐢🐢🐢   
-                {% endif %}
-            </li>
-            <h4>
-                {{task.description}}
-            </h4>
-        </ul>
-    </section>
-    {% endfor %}
-
-{% endif %}
+        {% for task in tasks %}
+        <section>
+            <ul>
+                <li>
+                    {{task.title}}
+                    {% if task.important %}
+                    ❗❗❗
+                    {% else %}
+                    🐢🐢🐢   
+                    {% endif %}
+                </li>
+                <h4>
+                    {{task.description}}
+                </h4>
+                <a href="{% url 'task_detail' task.id %}"><button>Editar</button></a>
+            </ul>
+        </section>
+        {% endfor %}
+        
+        {% else %}
+        <h3>NO HAY TAREAS PENDIENTES</h3>
+        {% endif %}
+        
+        
+        {% if task_complete == '' %}
+        
+        <h3>
+            Las tareas completadas son:
+        </h3>
+        {% for task in task_complete %}
+        <section>
+            <ul>
+                <li>
+                    {{task.title}}
+                    {% if task.important %}
+                    ❗❗❗
+                    {% else %}
+                    🐢🐢🐢   
+                    {% endif %}
+                </li>
+                <h4>
+                    {{task.description}}
+                </h4>
+            </ul>
+        </section>
+        {% endfor %}
+        
+        {% else %}
+        <h3>NO HAY TAREAS COMPLETADAS</h3>
+    {% endif %}
 
 
 {% endblock content %}

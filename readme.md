@@ -432,7 +432,7 @@ def task_create(request):
     })
 
 ```
-## 12.1) Actualizar datos en la base de datos
+## 12.1) Actualizar datos mediante un forms en la base de datos
 1. Crar el url.
 ```python
     ...
@@ -473,6 +473,29 @@ txt = ''
 {{text}}
 {% endblock content %}
 ```
+
+## 12.2) Actualizar un dato en la base de datos desde el backend
+1. Crear el url:
+```python
+...
+    path('task/<int:task_id>/', views.task_detail, name='task_detail'),
+    path('task/<int:task_id>/complete/', views.task_complete, name='task_complete'),
+]
+```
+2. Crear la vista.
+```python
+from django.utils import timezone
+
+def task_complete(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.date_completed = timezone.now()
+        task.save()
+    return redirect('tasks')
+```
+3. Crear el template
+No creo un template nuevo, lo redirecciono a la vista de las tareas.
+
 
 # 13. Enviar datos a un html
 Suponiendo que ya se tiene el url entonces:

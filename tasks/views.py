@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from .forms import TaskForm
 from .models import Task
+from django.utils import timezone
 
 def signup(request):
     error = ''
@@ -89,7 +90,10 @@ def task_create(request):
 def task(request):
     tasks = Task.objects.filter( user = request.user, date_completed__isnull=True )
     tasks_complete = Task.objects.filter( user = request.user, date_completed__isnull=False )
-    
+    print('TAREAS INCOMPLETAS ')
+    print(tasks)
+    print('TAREAS COMPLETAS')
+    print(tasks_complete)
     return render(request, 'tasks.html',{
         'tasks': tasks,
         'task_complete': tasks_complete
@@ -112,3 +116,10 @@ def task_detail(request, task_id):
         except:
             txt = 'Error al actualizar datos'
     return render(request, 'task.html', {'task': task, 'form': form, 'text': txt})
+
+def task_complete(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.date_completed = timezone.now()
+        task.save()
+    return redirect('tasks')
