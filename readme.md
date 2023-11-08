@@ -616,3 +616,38 @@ Y para el template seria...
 
 {% endblock content %}
 ```
+
+# 14. Proteger rutas
+Es para no acceder a lugares si no ha iniciado sesión.
+En el archivo de views.py se agrega lo siguiente:
+```python
+from django.contrib.auth.decorators import login_required
+#Lo ponemos arriba de la función de la vista en donde indiquemos que debe de iniciar sesión para acceder
+```
+
+Ya lo que queda es ponerlo arriba de las funciones de las vistas, en mi caso quedo de la siguiente forma:
+```python
+@login_required            
+def home(request):
+    ...
+
+@login_required
+def signout(request):
+    ...
+
+def logout(request)
+    ...
+
+@login_required
+def task_delete(request, task_id):
+    ...
+
+```
+
+En settings.py se debe de anexar lo siguiente debajo de _STATIC_URL_:
+```python
+#STATIC_URL = 'static/'
+
+LOGIN_URL = '/login'
+# = '/ruta_inicial' 
+```

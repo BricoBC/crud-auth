@@ -6,6 +6,8 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import TaskForm
 from .models import Task
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+#Lo ponemos arriba de la función de la vista en donde indiquemos que debe de iniciar sesión para acceder
 
 def signup(request):
     error = ''
@@ -34,7 +36,7 @@ def signup(request):
     'error': error
     })
 
-            
+@login_required            
 def home(request):
     return render(request, 'home.html')
         
@@ -59,10 +61,12 @@ def sigin(request):
         'error': error
     })
 
+@login_required
 def signout(request):
     logout(request)
     return redirect('/login')
 
+@login_required
 def task_create(request):
     txt = None
     if request.method == 'GET':
@@ -87,6 +91,7 @@ def task_create(request):
         'text': txt
     })
     
+@login_required
 def task(request):
     tasks = Task.objects.filter( user = request.user, date_completed__isnull=True )
     tasks_complete = Task.objects.filter( user = request.user, date_completed__isnull=False )
@@ -95,6 +100,7 @@ def task(request):
         'task_complete': tasks_complete
     })
     
+@login_required
 def task_detail(request, task_id):
     txt = ''
     task = get_object_or_404(Task, pk=task_id, user=request.user) 
@@ -113,6 +119,7 @@ def task_detail(request, task_id):
             txt = 'Error al actualizar datos'
     return render(request, 'task.html', {'task': task, 'form': form, 'text': txt})
 
+@login_required
 def task_complete(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
@@ -120,6 +127,7 @@ def task_complete(request, task_id):
         task.save()
     return redirect('tasks')
 
+@login_required
 def task_delete(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
