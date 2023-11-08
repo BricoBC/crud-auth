@@ -432,6 +432,42 @@ def task_create(request):
     })
 
 ```
+## 12.1) Actualizar datos en la base de datos
+1. Crar el url.
+```python
+    ...
+    path('task/create/', views.task_create, name='create_task'),
+    path('task/<int:task_id>/', views.task_detail, name='task_detail'),
+]
+```
+2. Crear la vista.
+```python
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, pk=task_id) 
+    #Va a obtener los datos de la tabla Tarea mediente la llave primaria
+    if request.method == 'GET':    
+        form = TaskForm(instance=task)
+        #Crea un formulario ya con los datos rellenos
+        return render(request, 'task.html', {'task': task, 'form': form})
+    else:
+        form = TaskForm(request.POST, instance=task)
+        #Llena el formulario con la información mandada con el metodo post mediante la instancia de la tarea
+        form.save()  
+        #Se guarda
+        return redirect('tasks')
+```
+3. Crear el template.
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Actualizar</button>
+</form>
+{% endblock content %}
+```
 
 # 13. Enviar datos a un html
 Suponiendo que ya se tiene el url entonces:

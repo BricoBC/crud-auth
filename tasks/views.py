@@ -97,4 +97,10 @@ def task(request):
     
 def task_detail(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
-    return render(request, 'task.html', {'task': task})
+    if request.method == 'GET':    
+        form = TaskForm(instance=task)
+        return render(request, 'task.html', {'task': task, 'form': form})
+    else:
+        form = TaskForm(request.POST, instance=task)
+        form.save()  
+        return redirect('tasks')
