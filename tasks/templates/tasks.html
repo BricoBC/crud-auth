@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% if tasks == ''%}
+    {% if tasks != none %}
         <h3>
             Todas tus tareas pendientes son:
         </h3>
@@ -22,6 +22,11 @@
                     {{task.description}}
                 </h4>
                 <a href="{% url 'task_detail' task.id %}"><button>Editar</button></a>
+                
+                <form action="{% url 'task_delete' task.id %}" method="post">
+                    {% csrf_token %}
+                    <button>Eliminar</button>
+                </form>
             </ul>
         </section>
         {% endfor %}
@@ -31,7 +36,7 @@
         {% endif %}
         
         
-        {% if task_complete == '' %}
+        {% if task_complete != null %}
         
         <h3>
             Las tareas completadas son:
@@ -47,9 +52,8 @@
                     🐢🐢🐢   
                     {% endif %}
                 </li>
-                <h4>
-                    {{task.description}}
-                </h4>
+                <h4>{{task.description}}</h4>
+                <h4>COMPLETADO: {{task.date_completed|date:'M j Y:i'  }}</h4>
             </ul>
         </section>
         {% endfor %}

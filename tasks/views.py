@@ -90,10 +90,6 @@ def task_create(request):
 def task(request):
     tasks = Task.objects.filter( user = request.user, date_completed__isnull=True )
     tasks_complete = Task.objects.filter( user = request.user, date_completed__isnull=False )
-    print('TAREAS INCOMPLETAS ')
-    print(tasks)
-    print('TAREAS COMPLETAS')
-    print(tasks_complete)
     return render(request, 'tasks.html',{
         'tasks': tasks,
         'task_complete': tasks_complete
@@ -122,4 +118,10 @@ def task_complete(request, task_id):
     if request.method == 'POST':
         task.date_completed = timezone.now()
         task.save()
+    return redirect('tasks')
+
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
     return redirect('tasks')

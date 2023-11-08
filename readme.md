@@ -496,6 +496,24 @@ def task_complete(request, task_id):
 3. Crear el template
 No creo un template nuevo, lo redirecciono a la vista de las tareas.
 
+# 12. Eliminar una tarea desde un botón en el front
+1. Crear el url:
+```python
+...
+    path('task/<int:task_id>/complete/', views.task_complete, name='task_complete'),
+    path('task/<int:task_id>/delete/', views.task_delete, name='task_delete'),
+]
+```
+2. Crear la vista:
+```python
+def task_delete(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+    return redirect('tasks')
+```
+
+Hago que se redireccione a la página de las Tareas.
 
 # 13. Enviar datos a un html
 Suponiendo que ya se tiene el url entonces:
